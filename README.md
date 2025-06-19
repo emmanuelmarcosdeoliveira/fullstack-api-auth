@@ -4,4 +4,7 @@
 
 <h3>Tecnologias</h3>
 
--[x] Node.js<br> -[x] Express.js<br> -[x] Prisma<br> -[x] JWT
+- [x] Node.js
+- [x] Express.js
+- [x] Prisma
+- [x] JWT

@@ -1,5 +1,12 @@
 import { AppError } from "@/utils/AppError";
 import { Request, Response, NextFunction } from "express";
+import { verify } from "jsonwebtoken";
+import { authConfig } from "@/configs/auth";
+
+interface TokenPayload {
+  role: string;
+  sub: string;
+}
 
 export function ensureAuthenticated(
   request: Request,
@@ -11,8 +18,15 @@ export function ensureAuthenticated(
     throw new AppError("JWT Token não informado", 401);
   }
   const [, token] = authHeader.split(" ");
+  const { sub: user_id, role } = verify(
+    token,
+    authConfig.jwt.secret
+  ) as TokenPayload;
 
-  console.log(token);
+  request.user = {
+    id: String(user_id),
+    role,
+  };
 
   return next();
 }
